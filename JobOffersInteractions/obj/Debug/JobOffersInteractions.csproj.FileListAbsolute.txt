@@ -5,3 +5,10 @@ C:\Daniele\Year 3\Dissertation\JobOffersInteractions\obj\Debug\JobOffersInteract
 C:\Daniele\Year 3\Dissertation\JobOffersInteractions\obj\Debug\JobOffersInteractions.csproj.CoreCompileInputs.cache
 C:\Daniele\Year 3\Dissertation\JobOffersInteractions\obj\Debug\JobOffersInteractions.exe
 C:\Daniele\Year 3\Dissertation\JobOffersInteractions\obj\Debug\JobOffersInteractions.pdb
+D:\Roehampton\Year 3\Dissertation\Code\PredictiveJobOffers\JobOffersInteractions\bin\Debug\JobOffersInteractions.exe.config
+D:\Roehampton\Year 3\Dissertation\Code\PredictiveJobOffers\JobOffersInteractions\bin\Debug\JobOffersInteractions.exe
+D:\Roehampton\Year 3\Dissertation\Code\PredictiveJobOffers\JobOffersInteractions\bin\Debug\JobOffersInteractions.pdb
+D:\Roehampton\Year 3\Dissertation\Code\PredictiveJobOffers\JobOffersInteractions\obj\Debug\JobOffersInteractions.csproj.AssemblyReference.cache
+D:\Roehampton\Year 3\Dissertation\Code\PredictiveJobOffers\JobOffersInteractions\obj\Debug\JobOffersInteractions.csproj.CoreCompileInputs.cache
+D:\Roehampton\Year 3\Dissertation\Code\PredictiveJobOffers\JobOffersInteractions\obj\Debug\JobOffersInteractions.exe
+D:\Roehampton\Year 3\Dissertation\Code\PredictiveJobOffers\JobOffersInteractions\obj\Debug\JobOffersInteractions.pdb
