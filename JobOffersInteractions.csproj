@@ -55,8 +55,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="Output\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="Dataset\JobOffersIds.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
