@@ -12,3 +12,11 @@ D:\Roehampton\Year 3\Dissertation\Code\PredictiveJobOffers\JobOffersInteractions
 D:\Roehampton\Year 3\Dissertation\Code\PredictiveJobOffers\JobOffersInteractions\obj\Debug\JobOffersInteractions.csproj.CoreCompileInputs.cache
 D:\Roehampton\Year 3\Dissertation\Code\PredictiveJobOffers\JobOffersInteractions\obj\Debug\JobOffersInteractions.exe
 D:\Roehampton\Year 3\Dissertation\Code\PredictiveJobOffers\JobOffersInteractions\obj\Debug\JobOffersInteractions.pdb
+D:\Roehampton\Year 3\Dissertation\Dissertation Report\Code\PredictiveJobOffers\JobOffersInteractions\obj\Debug\JobOffersInteractions.csproj.AssemblyReference.cache
+D:\Roehampton\Year 3\Dissertation\Dissertation Report\Code\PredictiveJobOffers\JobOffersInteractions\obj\Debug\JobOffersInteractions.csproj.CoreCompileInputs.cache
+D:\Roehampton\Year 3\Dissertation\Dissertation Report\Code\PredictiveJobOffers\JobOffersInteractions\obj\Debug\JobOffersInteractions.exe
+D:\Roehampton\Year 3\Dissertation\Dissertation Report\Code\PredictiveJobOffers\JobOffersInteractions\obj\Debug\JobOffersInteractions.pdb
+D:\Roehampton\Year 3\Dissertation\Dissertation Report\Code\PredictiveJobOffers\JobOffersInteractions\bin\Debug\JobOffersInteractions.exe.config
+D:\Roehampton\Year 3\Dissertation\Dissertation Report\Code\PredictiveJobOffers\JobOffersInteractions\bin\Debug\JobOffersInteractions.exe
+D:\Roehampton\Year 3\Dissertation\Dissertation Report\Code\PredictiveJobOffers\JobOffersInteractions\bin\Debug\JobOffersInteractions.pdb
+D:\Roehampton\Year 3\Dissertation\Dissertation Report\Code\PredictiveJobOffers\JobOffersInteractions\bin\Debug\Dataset\JobOffersIds.txt

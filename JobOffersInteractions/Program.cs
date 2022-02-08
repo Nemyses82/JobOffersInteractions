@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JobOffersInteractions.Helpers;
+using JobOffersInteractions.Models;
 
 namespace JobOffersInteractions
 {
-    public class Interaction
-    {
-        public int UserId { get; set; }
-        public int RandomJobOfferId { get; set; }
-    }
-
     // 1000 records of combined interaction data(after filtering by eventType and eventValueThreshold, if provided)
     //
     // 25 unique users with at least 2 interactions each
 
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static List<Interaction> _interactions = new();
+        private static IEnumerable<JobOffer> _jobOffers = new List<JobOffer>();
+        private static IEnumerable<JobSeeker> _jobSeekers = new List<JobSeeker>();
+
+        private static void Main(string[] args)
         {
             var random = new Random();
 
@@ -24,35 +24,38 @@ namespace JobOffersInteractions
             const int numberOfUniqueUsers = 25;
             const int numberOfMinimumInteractions = 2;
 
-            var interactions = new List<Interaction>();
-
-            while (interactions.Count < numberOfInteractions)
+            CreateDatasets();
+            
+            while (_interactions.Count < numberOfInteractions)
             {
-                var randomUserId = random.Next(0, 1000);
-                var randomJobOfferId = random.Next(30, 40);
+                // var randomUserId = random.Next(0, 1000);
+                var jobSeekerIds = _jobSeekers.Select(x => x.JobSeekerId).ToList();
+                var randomUserIdIndex = random.Next(jobSeekerIds.Count);
+                var randomUserId = jobSeekerIds[randomUserIdIndex];
+                // var randomJobOfferId = random.Next(30, 40);
+                var randomJobOfferIds = _jobOffers.Select(x => x.JobId).ToList();
+                var randomJobOfferIdIndex = random.Next(randomJobOfferIds.Count);
+                var randomJobOfferId = randomJobOfferIds[randomJobOfferIdIndex];
 
-                var grouped = interactions.GroupBy(a => a.UserId)
+                var grouped = _interactions.GroupBy(a => a.UserId)
                     .Select(g => new { userId = g.Key, Count = g.Count() }).OrderBy(x => x.userId).ToList();
 
-                if (interactions.Count < numberOfUniqueUsers && interactions.Count(x => x.UserId == randomUserId) == 0)
+                if (_interactions.Count < numberOfUniqueUsers && _interactions.Count(x => x.UserId == randomUserId) == 0)
                 {
-                    interactions.Add(new Interaction
-                    {
-                        UserId = randomUserId,
-                        RandomJobOfferId = randomJobOfferId
-                    });
+                    _interactions.Add(new Interaction(randomUserId, randomJobOfferId,
+                        new DateTimeOffset(DateTime.Now).ToUnixTimeMilliseconds()));
                     continue;
                 }
 
-                var allWithTwoInteractionGrouped = interactions
+                var allWithTwoInteractionGrouped = _interactions
                     .GroupBy(a => a.UserId)
                     .Select(g => new { userId = g.Key, Count = g.Count() })
                     .Where(x => x.Count >= numberOfMinimumInteractions).ToList();
 
-                var allWithTwoInteraction = interactions.Where(x =>
+                var allWithTwoInteraction = _interactions.Where(x =>
                     allWithTwoInteractionGrouped.Select(y => y.userId).Contains(x.UserId)).ToList();
 
-                var allWithOneInteraction = interactions.Where(x =>
+                var allWithOneInteraction = _interactions.Where(x =>
                     !allWithTwoInteractionGrouped.Select(y => y.userId).Contains(x.UserId)).ToList();
 
                 var oneInteractionMargin = allWithOneInteraction.Count * 2;
@@ -64,24 +67,28 @@ namespace JobOffersInteractions
                     var itemInGroup = grouped.FirstOrDefault(x => x.userId == randomUserId && x.Count == 1);
                     if (itemInGroup != null)
                     {
-                        interactions.Add(new Interaction
-                        {
-                            UserId = randomUserId,
-                            RandomJobOfferId = randomJobOfferId
-                        });
+                        // _interactions.Add(new Interaction
+                        // {
+                        //     UserId = randomUserId,
+                        //     RandomJobOfferId = randomJobOfferId
+                        // });
+                        _interactions.Add(new Interaction(randomUserId, randomJobOfferId,
+                            new DateTimeOffset(DateTime.Now).ToUnixTimeMilliseconds()));
                     }
                     continue;
                 }
 
-                interactions.Add(new Interaction
-                {
-                    UserId = randomUserId,
-                    RandomJobOfferId = randomJobOfferId
-                });
+                // _interactions.Add(new Interaction
+                // {
+                //     UserId = randomUserId,
+                //     RandomJobOfferId = randomJobOfferId
+                // });
+                _interactions.Add(new Interaction(randomUserId, randomJobOfferId,
+                    new DateTimeOffset(DateTime.Now).ToUnixTimeMilliseconds()));
             }
 
-            interactions = interactions.OrderBy(x => x.UserId).ToList();
-            var groupedInteractions = interactions.GroupBy(a => a.UserId)
+            _interactions = _interactions.OrderBy(x => x.UserId).ToList();
+            var groupedInteractions = _interactions.GroupBy(a => a.UserId)
                 .Select(g => new { userId = g.Key, Count = g.Count() }).OrderBy(x => x.userId).ToList();
             groupedInteractions.ForEach(x =>
                 {
@@ -89,6 +96,12 @@ namespace JobOffersInteractions
                 });
 
             Console.ReadLine();
+        }
+
+        private static void CreateDatasets()
+        {
+            _jobSeekers = DataInitialiser.SetJobSeeker();
+            _jobOffers = DataInitialiser.SetJobOffers();
         }
     }
 }
