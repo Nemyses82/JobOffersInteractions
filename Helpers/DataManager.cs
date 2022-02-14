@@ -9,7 +9,7 @@ using JobOffersInteractions.Models;
 
 namespace JobOffersInteractions.Helpers
 {
-    internal static class DataInitialiser
+    internal static class DataManager
     {
         public static IEnumerable<JobSeeker> SetJobSeeker()
         {
@@ -41,8 +41,10 @@ namespace JobOffersInteractions.Helpers
 
         public static void GenerateCsvInteractions(List<Interaction> interactions)
         {
-            var runTimeDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var outputDirectory = Path.Combine(runTimeDirectory, "Output");
+            var currentDomainBaseDirectory = Directory.GetParent(Directory.GetParent(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).FullName).FullName).FullName;
+
+            // var runTimeDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var outputDirectory = Path.Combine(currentDomainBaseDirectory, "Output");
 
             if (!Directory.Exists(outputDirectory))
                 Directory.CreateDirectory(outputDirectory);

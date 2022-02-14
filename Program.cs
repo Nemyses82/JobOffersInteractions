@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using CsvHelper;
 using JobOffersInteractions.Helpers;
 using JobOffersInteractions.Models;
 
@@ -89,15 +85,15 @@ namespace JobOffersInteractions
                     Console.WriteLine($"UserId: {x.userId} - Count: {x.Count}");
                 });
 
-            DataInitialiser.GenerateCsvInteractions(_interactions);
+            DataManager.GenerateCsvInteractions(_interactions);
 
             Console.ReadLine();
         }
 
         private static void CreateDatasets()
         {
-            _jobSeekers = DataInitialiser.SetJobSeeker();
-            _jobOffers = DataInitialiser.RetrieveJobOffers();
+            _jobSeekers = DataManager.SetJobSeeker();
+            _jobOffers = DataManager.RetrieveJobOffers();
         }
     }
 }

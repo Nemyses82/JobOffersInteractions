@@ -70,7 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\DataInitialiser.cs" />
+    <Compile Include="Helpers\DataManager.cs" />
     <Compile Include="Models\Interaction.cs" />
     <Compile Include="Models\JobOfferMap.cs" />
     <Compile Include="Models\JobOffer.cs" />
