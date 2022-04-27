@@ -22,16 +22,16 @@ namespace JobOffersInteractions
 
             var random = new Random();
 
-            const int numberOfInteractions = 1000;
-            const int numberOfUniqueUsers = 25;
+            const int numberOfInteractions = 11000;
+            const int numberOfUniqueUsers = 10;
             const int numberOfMinimumInteractions = 2;
 
             while (_interactions.Count < numberOfInteractions)
             {
-                // var randomUserId = random.Next(0, 1000);
-                var jobSeekerIds = _jobSeekers.Select(x => x.JobSeekerId).ToList();
-                var randomUserIdIndex = random.Next(jobSeekerIds.Count);
-                var randomUserId = jobSeekerIds[randomUserIdIndex];
+                var randomUserId = random.Next(1, 11);
+                // var jobSeekerIds = _jobSeekers.Select(x => x.JobSeekerId).ToList();
+                // var randomUserIdIndex = random.Next(jobSeekerIds.Count);
+                // var randomUserId = jobSeekerIds[randomUserIdIndex];
                 // var randomJobOfferId = random.Next(30, 40);
                 var randomJobOfferIds = _jobOffers.Select(x => x.JobId).ToList();
                 var randomJobOfferIdIndex = random.Next(randomJobOfferIds.Count);
@@ -75,6 +75,8 @@ namespace JobOffersInteractions
                 
                 _interactions.Add(new Interaction(randomUserId, randomJobOfferId,
                     new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()));
+
+                Console.WriteLine(_interactions.Count);
             }
 
             _interactions = _interactions.OrderBy(x => x.UserId).ToList();

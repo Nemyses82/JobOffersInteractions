@@ -4,6 +4,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Bogus;
+using Bogus.DataSets;
 using CsvHelper;
 using JobOffersInteractions.Models;
 
@@ -13,34 +15,32 @@ namespace JobOffersInteractions.Helpers
     {
         public static IEnumerable<JobSeeker> SetJobSeeker()
         {
-            var jobSeekers = new List<JobSeeker>
-            {
-                new(1, "", "", "", ""),
-                new(2, "", "", "", ""),
-                new(3, "", "", "", ""),
-                new(4, "", "", "", ""),
-                new(5, "", "", "", ""),
-                new(6, "", "", "", ""),
-                new(7, "", "", "", ""),
-                new(8, "", "", "", ""),
-                new(9, "", "", "", ""),
-                new(10, "", "", "", ""),
-                new(11, "", "", "", ""),
-                new(12, "", "", "", ""),
-                new(13, "", "", "", ""),
-                new(14, "", "", "", ""),
-                new(15, "", "", "", ""),
-                new(16, "", "", "", ""),
-                new(17, "", "", "", ""),
-                new(18, "", "", "", ""),
-                new(19, "", "", "", ""),
-                new(20, "", "", "", ""),
-                new(21, "", "", "", ""),
-                new(22, "", "", "", ""),
-                new(23, "", "", "", ""),
-                new(24, "", "", "", ""),
-                new(25, "", "", "", "")
-            };
+            var userIds = 1;
+            var testUsers = new Faker<JobSeeker>()
+                //Optional: Call for objects that have complex initialization
+                .CustomInstantiator(f => new JobSeeker(userIds++))
+
+                //Use an enum outside scope.
+                .RuleFor(u => u.Gender, f => f.PickRandom<Name.Gender>())
+
+                //Basic rules using built-in generators
+                .RuleFor(u => u.FirstName, (f, u) => f.Name.FirstName(u.Gender))
+                .RuleFor(u => u.LastName, (f, u) => f.Name.LastName(u.Gender))
+                .RuleFor(u => u.Avatar, f => f.Internet.Avatar())
+                .RuleFor(u => u.Username, (f, u) => f.Internet.UserName(u.FirstName, u.LastName))
+                .RuleFor(u => u.Email, (f, u) => f.Internet.Email(u.FirstName, u.LastName))
+                .RuleFor(u => u.SomethingUnique, f => $"Value {f.UniqueIndex}")
+
+                .RuleFor(u => u.Password, f => f.Internet.Password(5, true))
+
+                .RuleFor(u => u.CartId, f => Guid.NewGuid())
+                .RuleFor(u => u.FullName, (f, u) => u.FirstName + " " + u.LastName)
+                .FinishWith((f, u) =>
+                {
+                    Console.WriteLine("User Created! Id={0}", u.JobSeekerId);
+                });
+
+            var jobSeekers = Enumerable.Range(1, 1000).Select(x => testUsers.Generate()).ToList();
 
             return jobSeekers;
         }
@@ -83,6 +83,13 @@ namespace JobOffersInteractions.Helpers
             csv.Context.RegisterClassMap<JobOfferMap>();
             var jobs = csv.GetRecords<JobOffer>().ToList();
 
+            // string[] keywords = { "senior", "developer", ".net", "c#", "architect", "asp.net", "java", "javascript", "software", "engineer", "agile", "tester", "test" };
+            string[] keywords = { ".net", "c#", "asp.net", "java", "javascript"};
+            // string[] keywords = { "tester", "test" };
+            // string[] keywords = { "architect" };
+
+            jobs = jobs.Where(x => ContainsAny(x.JobTitle.ToLower(), keywords.ToList())).ToList();
+
             return jobs;
 
             // var runTimeDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -95,6 +102,14 @@ namespace JobOffersInteractions.Helpers
             // using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
             // csv.Context.RegisterClassMap<InteractionMap>();
             // csv.WriteRecords(interactions);
+        }
+
+        public static bool ContainsAny(string stringToTest, List<string> substrings)
+        {
+            if (string.IsNullOrEmpty(stringToTest) || substrings == null)
+                return false;
+
+            return substrings.Any(stringToTest.Contains);
         }
     }
 }
